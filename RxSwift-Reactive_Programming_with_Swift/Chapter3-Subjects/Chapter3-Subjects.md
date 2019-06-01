@@ -1,9 +1,12 @@
 # Chapter 3 - Subjects
 ## 요약
 1. Subject = Observerable + Observer
-2. `PublishSubject`
-3. `BehaviorSubject`
-4. `ReplaySubject`
+2. `PublishSubject`<br/>
+	<img src="https://user-images.githubusercontent.com/43217043/58745827-5e603b00-8491-11e9-851c-ea3c6c560b18.png"><br/>
+3. `BehaviorSubject`<br/>
+	<img src="https://user-images.githubusercontent.com/43217043/58745818-48eb1100-8491-11e9-9a9a-1fb63aa55df5.png"><br/>
+4. `ReplaySubject`<br/>
+	<img src="https://user-images.githubusercontent.com/43217043/58745802-ec87f180-8490-11e9-8728-ac2d036b15ed.png"><br/>
 
 ## What are subjects?
 1. Subject = Observable + Observer
