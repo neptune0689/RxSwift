@@ -8,6 +8,7 @@
 - [fimuxd/RxSwift](https://github.com/fimuxd/RxSwift)
 
 ## Table of Contents
-| Chapter | Suject |
-| :---: | :---------------- |
-| 2 | [Observables](https://github.com/neptune0689/RxSwift/blob/master/RxSwift-Reactive_Programming_with_Swift/Chapter2-Observables/Chapter2-Observables.md) |
+| Chapter | Suject | 키워드 |
+| :---: | :---------------- | :---------------- |
+| 2 | [Observables](https://github.com/neptune0689/RxSwift/blob/master/RxSwift-Reactive_Programming_with_Swift/Chapter2-Observables/Chapter2-Observables.md) | `Observable`, `Subscribe`, `Single`, `Completable`, `Maybe` |
+| 3 | [Subjects](https://github.com/neptune0689/RxSwift/blob/master/RxSwift-Reactive_Programming_with_Swift/Chapter3-Subjects/Chapter3-Subjects.md) | `Subject`, `PublishSubject`, `BehaviorSubject`, `ReplaySubject` |
