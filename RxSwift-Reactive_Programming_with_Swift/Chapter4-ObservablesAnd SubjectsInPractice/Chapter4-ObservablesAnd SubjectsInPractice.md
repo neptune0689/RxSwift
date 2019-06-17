@@ -250,6 +250,7 @@ DispatchQueue.main.async {
 
 ### 4-3. Completable
 <img width="466" alt="스크린샷 2019-06-17 오후 4 22 21" src="https://user-images.githubusercontent.com/43217043/59589073-12b1c080-9124-11e9-950f-19c344e42d85.png">
+
 - 해당 `Observable`는 `.completed`나 `.error` 이벤트를 방출한다.
 - observable sequence를 completable으로 바꿀 수 없다.
 - observable가 값을 방출하면, completable로 전환하지 못한다.
