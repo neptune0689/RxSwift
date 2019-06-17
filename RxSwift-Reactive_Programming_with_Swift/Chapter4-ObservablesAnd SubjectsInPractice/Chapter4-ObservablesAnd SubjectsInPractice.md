@@ -224,6 +224,7 @@ DispatchQueue.main.async {
 
 ### 4-1. Single
 <img width="482" alt="스크린샷 2019-06-17 오후 4 22 08" src="https://user-images.githubusercontent.com/43217043/59589071-12192a00-9124-11e9-8521-f067f2fd0d2e.png">
+
 - `Single`은 `Observable`에 특화 되었다.
 - `Single`의 sequence에서 `.success(Value)` 또는 `.error` 이벤트를 방출할 것이다.
 - `.success`는 `.next`와 `.completed`를 합한 것과 같다.
@@ -235,6 +236,7 @@ DispatchQueue.main.async {
 
 ### 4-2. Maybe
 <img width="492" alt="스크린샷 2019-06-17 오후 4 22 15" src="https://user-images.githubusercontent.com/43217043/59589072-12b1c080-9124-11e9-935a-992b7cbf0bb0.png">
+
 - 성공적이게 완료되었을때 값을 방출하지 않는 것을 빼고, `Maybe`도 `Single`과 비슷하게 동작한다.
 - Maybe의 사용 예시를 생각 해보자.
 	- 앱은 커스텀 사진 앨범에서 사진들을 저장하는 것이다.
