@@ -4,7 +4,7 @@
 ## 1. Ignoring operators
 ### 1-1. ignoreElements
 
-(사진)
+<img width="327" alt="스크린샷 2019-06-20 오후 12 55 14" src="https://user-images.githubusercontent.com/43217043/59845704-f66a8980-9398-11e9-92ae-e555ebea7bb0.png">
 
 `ignoreElements`는 `.next` 이벤트를 무시하고, 종료 이벤트인 `.completed`와 `.error` 는 통과 시킨다.
 
@@ -27,7 +27,7 @@ strikes.onCompleted() // print "You're out!"
 
 ### 1-2. elementAt
 
-(사진)
+<img width="466" alt="스크린샷 2019-06-20 오후 1 36 24" src="https://user-images.githubusercontent.com/43217043/59845706-f7032000-9398-11e9-83fd-274b6cad25c0.png">
 
 observable에 의해 방출되는 n번째 요소를 처리할고 싶을 때가 있다. `elementAt`을 사용하면 원하는 n번째 요소를 통과시키고, 나머지 요소들은 무시할 수 있다. 
 
@@ -37,7 +37,7 @@ let disposeBag = DisposeBag()
 
 strikes
 	.elementAt(2)
-  .subscribe(onNext: { _ in print("You're out!") })
+  	.subscribe(onNext: { _ in print("You're out!") })
 	.disposed(by: disposeBag)
 
 strikes.onNext("X") // no print
@@ -50,7 +50,7 @@ strikes.onNext("X") // print
 
 ### 1-3. filter
 
-(사진)
+<img width="476" alt="스크린샷 2019-06-20 오후 1 56 09" src="https://user-images.githubusercontent.com/43217043/59845707-f7032000-9398-11e9-855d-89719e186a56.png">
 
 `ignoreElements`와 `elementAt`은 observable에 의해 방출되는 요소들을 필터링 했다.  필터링이 필요한 경우가 하나 이상일때, `filter`를 사용할 수 있다. `filter`는 조건문 클로저를 갖는다. 이 조건문은 요소들마다 적용되어, 조건문이 `true`일때만 요소를 통과 시킨다.
 
@@ -58,8 +58,8 @@ strikes.onNext("X") // print
 let disposeBag = DisposeBag()
 Observable.of(1, 2, 3, 4, 5, 6)
 	.filter { $0 % 2 == 0 } // 짝수 요소만 통과
-  .subscribe(onNext: { print($0) }) // print "2", "4", "6"
-  .disposed(by: disposeBag)
+  	.subscribe(onNext: { print($0) }) // print "2", "4", "6"
+  	.disposed(by: disposeBag)
 ```
 </br></br>
 
@@ -67,7 +67,7 @@ Observable.of(1, 2, 3, 4, 5, 6)
 ## 2. Skipping operators
 ### 2-1. skip
 
-(사진)
+<img width="458" alt="스크린샷 2019-06-20 오후 2 15 28" src="https://user-images.githubusercontent.com/43217043/59845708-f7032000-9398-11e9-8186-e7805e2a0ffb.png">
 
 `skip`은 첫번째부터 n번째까지 요소를 무시한다. (index가 아님!)
 
@@ -75,14 +75,14 @@ Observable.of(1, 2, 3, 4, 5, 6)
 let disposeBag = DisposeBag()
 Observable.of("A", "B", "C", "D", "E", "F")
 	.skip(3) // 세번째 요소인 "C"까지 무시, 이후 "D"부터는 통과
-  .subscribe(onNext: { print($0) }) // print "D", "E", "F"
-  .disposed(by: disposeBag)
+  	.subscribe(onNext: { print($0) }) // print "D", "E", "F"
+  	.disposed(by: disposeBag)
 ```
 </br></br>
 
 ### 2-2. skipWhile
 
-(사진)
+<img width="458" alt="스크린샷 2019-06-20 오후 2 43 12" src="https://user-images.githubusercontent.com/43217043/59845714-fa96a700-9398-11e9-8f30-4de8ad85e782.png">
 
 subscription가 살아 있는 동안 계속 요소들을 필터링하는 `filter` 와 다르게, `skipWhile`은 조건문이 `false` 되기 전까지만 요소 값을 무시하는 연산자이다. `skipWhile`의 클로저는 ''어떤 조건까지 요소 값을 무시할지'에 대한 로직을 갖는다. 해당 로직 값이 false 된 이후에 요소들이 통과된다.
 
@@ -90,8 +90,8 @@ subscription가 살아 있는 동안 계속 요소들을 필터링하는 `filter
 let disposeBag = DisposeBag()
 Observable.of(2, 2, 3, 4, 4)
 	.skipWhile { %0 % 2 == 0 } // 두번째 2까지 무시, 3 이후 부터는 다 통과
-  .subscribe(onNext: { print($0) }) // print "3", "4", "4"
-  .disposed(by: disposeBag)
+  	.subscribe(onNext: { print($0) }) // print "3", "4", "4"
+  	.disposed(by: disposeBag)
 ```
 - 보험 금액 청구 앱을 개발한다고 가정하면, 공제액이 충족될 때까지 보험금 지급을 막기위해 `skipWhile`을 사용 할 수 있다.
 
@@ -99,7 +99,7 @@ Observable.of(2, 2, 3, 4, 4)
 
 ### 2-3. skipUntil
 
-(사진)
+<img width="471" alt="스크린샷 2019-06-20 오후 2 59 45" src="https://user-images.githubusercontent.com/43217043/59845715-fa96a700-9398-11e9-83ff-35c5af924112.png">
 
 지금 필터링은 정적인 조건을 가졌다. 다른 observable을 기반으로 동적이게 요소 값을 필터링하기를 원한다면? `skipUntil`은 trigger observable이 이벤트를 방출하기 전까지 source observable (구독하게 될 observable)으로 온 요소를 무시한다. 
 
@@ -112,7 +112,7 @@ let trigger = PublishSubject<String>()
 subject
 	.skipUntil(trigger) // trigger observable이 .next 이벤트를 방출하기 전까지 요소들 무시
 	.subscribe(onNext: { print($0) })
-  .disposed(by: disposeBag)
+  	.disposed(by: disposeBag)
 
 subject.onNext("A") // no print
 subject.onNext("B") // no print
@@ -124,7 +124,7 @@ subject.onNext("C") // print "C"
 ## 3. Taking operators
 ### 3-1. take
 
-(사진)
+<img width="466" alt="스크린샷 2019-06-20 오후 3 33 08" src="https://user-images.githubusercontent.com/43217043/59845716-fa96a700-9398-11e9-9fe9-8fccfa47039a.png">
 
 taking은 skipping과 반대되는 개념이다. `task`는 n개까지 요소들 가져가고 싶을 때 사용한다.
 
@@ -132,14 +132,14 @@ taking은 skipping과 반대되는 개념이다. `task`는 n개까지 요소들 
 let disposeBag = DisposeBag()
 Observable.of(1, 2, 3, 4, 5, 6)
 	.take(3) // 3번째 요소까지만 통과
-  .subscribe(onNext: { print($0) }) // print "1", "2", "3"
-  .disposed(by: disposeBag)
+  	.subscribe(onNext: { print($0) }) // print "1", "2", "3"
+  	.disposed(by: disposeBag)
 ```
 </br></br>
 
 ### 3-2. takeWhile
 
-(사진)
+<img width="466" alt="스크린샷 2019-06-20 오후 3 37 57" src="https://user-images.githubusercontent.com/43217043/59845718-fb2f3d80-9398-11e9-8a73-355a5fc54d67.png">
 
 takeWhile은 skipWhile처럼 동작한다. </br>
 
@@ -149,12 +149,12 @@ takeWhile은 skipWhile처럼 동작한다. </br>
 let disposeBag = DisposeBag()
 Observable.of(2, 2, 4, 4, 6, 6)
 	.enumerated()
-  .takeWhile { index, integer in
-  	integer % 2 == 0 && index < 3 // 짝수이고 index가 3보다 작은 요소들만 통과
+	.takeWhile { index, integer in
+		integer % 2 == 0 && index < 3 // 짝수이고 index가 3보다 작은 요소들만 통과
 	}
-  .map { $0.element }
-  .subscribe(onNext: { print($0) }) // print "2", 2", "4"
-  .disposed(by: disposeBag)
+  	.map { $0.element }
+  	.subscribe(onNext: { print($0) }) // print "2", 2", "4"
+  	.disposed(by: disposeBag)
 ```
 
 - 조건값이 false 되기전까지 요소를 통과 시킨다.
@@ -164,7 +164,7 @@ Observable.of(2, 2, 4, 4, 6, 6)
 
 ### 3-3. takeUntil
 
-(사진)
+<img width="473" alt="스크린샷 2019-06-20 오후 3 54 24" src="https://user-images.githubusercontent.com/43217043/59845720-fb2f3d80-9398-11e9-8a90-2459b0d22115.png">
 
 skipUntil와 비슷하게, taskUtil도 trigger observable이 요소를 방출하기 전까지 source observable에서 방출된 요소들을 통과시킨다.
 
@@ -175,9 +175,9 @@ let subject = PublishSubject<String>()
 let trigger = PublishSubject<String>()
 
 subject
-.takeUntil(trigger)
-.subscribe(onNext: { print($0) })
-.disposed(by: disposeBag)
+	.takeUntil(trigger)
+	.subscribe(onNext: { print($0) })
+	.disposed(by: disposeBag)
 
 subject.onNext("1") // print "1"
 subject.onNext("2") // print "2"
@@ -192,7 +192,7 @@ RxCocoa의 API에서 dispose bag를 추가하는 대신 `takeUntil`을 사용하
 ```swift
 someObservable
 	.takeUntil(self.rx.deallocated) // self가 할당 해지하기 전까지 요소를 통과  
-  .subscribe(onNext: { print($0) })
+  	.subscribe(onNext: { print($0) })
 ```
 
 </br></br>
@@ -201,7 +201,7 @@ someObservable
 
 ### 4-1. distinctUntilChanged
 
-(사진)
+<img width="435" alt="스크린샷 2019-06-20 오후 4 09 38" src="https://user-images.githubusercontent.com/43217043/59845722-fbc7d400-9398-11e9-931f-9eff5b282edb.png">
 
 연속으로 중복된 item을 통과시키지 않을 수 있는 연산자를 알아보자. `distinctUntilChanged`은 바로 옆에 있는 중복만 방지한다.
 
@@ -210,13 +210,13 @@ let disposeBag = DisposeBag()
 
 Observable.of("A", "A", "B", "B", "A")
 	.distinctUntilChanged() // 연속으로 중복되는 두번째 "A"와 네번째 "B"는 무시
-  .subscribe(onNext: { print($0) }) // print "A", "B", "A"
-  .disposed(by: disposeBag)
+  	.subscribe(onNext: { print($0) }) // print "A", "B", "A"
+  	.disposed(by: disposeBag)
 ```
 
 </br>
 
-(사진)
+<img width="472" alt="스크린샷 2019-06-20 오후 7 30 53" src="https://user-images.githubusercontent.com/43217043/59845723-fbc7d400-9398-11e9-9a70-1fbedef14f8a.png">
 
 `String` 타입은 `Equatable`을 따른다. 그래서 `String`의 요소들은 `Eqauatable`의 구현체를 이용하여 값이 같은지 비교한다. 이와 다르게 `distinctUntilChanged(_:)`은 직접 구현한 비교 로직을 파라미터로 넘겨 사용할 수 있다.
 
@@ -232,21 +232,22 @@ Observable<NSNumber>
 	.of(10, 110, 20, 200, 210, 310)
 	// 3
 	.distinctUntilChanged { a, b in
-    // 4
+		
+    		// 4
 		guard let aWords = formatter.string(from: a)?.components(separatedBy: " "),
 			let bWords = formatter.string(from: b)?.components(separatedBy: " ") else { return }
-    var containsMatch = false
+    		var containsMatch = false
     
-    // 5
-    for aWord in aWords {
-      for bWord in bWords {
-        if aWord == bWord {
-          containsMatch == true
-          break
-        }
-      }
-    }
-    return containsMatch
+	    	// 5
+	    	for aWord in aWords {
+	      		for bWord in bWords {
+				if aWord == bWord {
+		  			containsMatch == true
+		  			break
+				}
+	      		}
+	    	}
+    		return containsMatch
 	}
 	// 6
 	.subscribe(onNext: { print($0) })
@@ -271,12 +272,11 @@ Observable<NSNumber>
 ### Challenge 1: Create a phone number lookup
 
 조건
-
 1. 전화번호는 0으로 시작 불가 - `skipWhile` 사용
 2. 전화번호는 일의 자리 숫자 (10보다 작음) - `filter`사용
 3. 10번째의 숫자만 받도록 - `take`와 `toArray` 사용
 
-```sw
+```swift
 input
 	.skipWhile { $0 == 0 }
 	.filter { $0 < 10 }
@@ -285,10 +285,10 @@ input
 	.subscribe(onNext: {
 		let phone = phoneNumber(from: $0)
 		if let contact = contacts[phone] {
-    	print("Dialing \(contact) (\(phone))...")
-    } else {
-      print("Contact not found")
-    }
+    			print("Dialing \(contact) (\(phone))...")
+    		} else {
+      			print("Contact not found")
+    		}
 	})
 	.disposed(by: disposeBag)
 ```
