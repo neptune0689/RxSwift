@@ -2,7 +2,7 @@
 
 ## 1. Improving the Combinestagram project
 
-(사진)
+<img width="277" src="https://user-images.githubusercontent.com/43217043/60793959-b3cfec00-a1a3-11e9-862d-2b2c5fc330e3.png">
 
 - 연산자들은 `Observable<E>`클래스의 메소드들이고, 그들 중 몇몇은 `Observalbe<E>`가 채택하는 `ObservableType` 프로토콜에 정의 되어 있다.
 - 연산자들은 그들의 `Observable` 클래스의 요소들을 연산하고 새로운 observable sequence를 결과로 생산한다. 그것은 연산자들을 연속으로 연결할 수 있도록 하고, sequence내에서 여러 변환을 수행한다.
@@ -11,7 +11,7 @@
 
 ### 1-1. Refining the photos sequence
 
-(사진)
+<img width="278" src="https://user-images.githubusercontent.com/43217043/60793961-b4688280-a1a3-11e9-9d14-219ee40b7012.png">
 
 - 너는 사용자가 콜라주에서 사진들을 추가할 때, 매번 미리보기를 갱신하는 것 이상의 것을 하기를 원한다.
 -  사진 observable이 완료된후, 사용자는 메인 화면으로 돌아가, on 또는 off 하거나, label을 갱신하는 등의 것들을 할 것이다.
@@ -30,25 +30,25 @@
 ```swift
 var start = 0
 func getStartNumber() -> Int {
-  start += 1
-  return start
+	start += 1
+	return start
 }
 
 let numbers = Obsrevable<Int>.create { observer in
 	let start = getStartNumber()
-  observer.onNext(start)
-  observer.onNext(start+1)
-  observer.onNext(start+2)
-  observer.onCompleted()
-  return Disposables.create()
+  	observer.onNext(start)
+  	observer.onNext(start+1)
+  	observer.onNext(start+2)
+  	observer.onCompleted()
+  	return Disposables.create()
 }
 
 numbers
 	.subscribe(onNext: { el in
-    print("element [\(el)]")
-  }, onCompleted: {
-    print("---------------")
-  })
+		print("element [\(el)]")
+	}, onCompleted: {
+    		print("---------------")
+  	})
 
 // element [1]
 // element [2]
@@ -57,10 +57,10 @@ numbers
 
 numbers // copy and paste the exact same subscription code
 	.subscribe(onNext: { el in
-    print("element [\(el)]")
-  }, onCompleted: {
-    print("---------------")
-  })
+    		print("element [\(el)]")
+  	}, onCompleted: {
+    		print("---------------")
+  	})
 
 // element [2]
 // element [3]
@@ -84,9 +84,9 @@ let newPhotos = photosViewController.selectedPhotos.share()
 
 </br>
 
-(사진)
+<img width="649" src="https://user-images.githubusercontent.com/43217043/60793964-b5011900-a1a3-11e9-8a74-75a3bf035de2.png">
 
-(사진)
+<img width="651" src="https://user-images.githubusercontent.com/43217043/60793967-b6324600-a1a3-11e9-9a34-d4e8a3aa5de5.png">
 
 - 첫번째 사진 처럼 새로운 `Observable` 인스턴트를 각각의 subscription 마다 생성하는 것이 아니라, 두번째 사진 처럼 한개의 `Observable`에서 생성한 요소들을 여러개의 subscription들이 소비하도록 하자.
 - `newPhotos`에 두번째 subscription을 생성하고 원하지 않은 요소들을 필터링 할 수 있다.
@@ -102,7 +102,7 @@ let newPhotos = photosViewController.selectedPhotos.share()
 
 ### 2-1. Ignoring all elements
 
-(사진)
+<img width="493" src="https://user-images.githubusercontent.com/43217043/60793970-b6cadc80-a1a3-11e9-858c-f596038bf3e2.png">
 
 - `newPhotos`는 사용자가 사진을 선택할때마다 `UIImage` 요소를 방출하는 것을 재호출해라. 이번 섹션에서, 메인 화면의 네이베이션 왼쪽에 작은 미리보기 콜라주 아이콘을 추가할 것이다.
 -  사용자가 메인 화면에 돌아 왔을때 딱 한번 아이콘을 갱신하고 싶을 것이다. 그러기 위해선 `UImage` 요소들을 모두 무시하다가 `.completed` 이벤트가 호출될때 동작하면 된다.
@@ -113,8 +113,8 @@ let newPhotos = photosViewController.selectedPhotos.share()
 newPhotos
 	.ignoreElements()
 	.subscribe(onCompleted: { [weak self] in
-    self?.updateNavigationIcon()
-  })
+    		self?.updateNavigationIcon()
+  	})
 	.disposed(by: photosViewController.bag)
 ```
 
@@ -122,9 +122,9 @@ newPhotos
 
 ```swift
 private func updateNavigationIcon() {
-  let icon = imagePrevie.image?
-  	.scaled(CGSize(width: 22, height: 22))
-  	.withRenderingMode(.alwaysOriginal)
+	let icon = imagePrevie.image?
+		.scaled(CGSize(width: 22, height: 22))
+  		.withRenderingMode(.alwaysOriginal)
   
   navigationItem.leftBarButtonItem = UIBarButtonItem(image: icon, style: .done, target: nil, action: nil)
 }
@@ -134,7 +134,7 @@ private func updateNavigationIcon() {
 
 ### 2-2. Filtering elements you don't need
 
-(사진)
+<img width="453" src="https://user-images.githubusercontent.com/43217043/60793972-b7637300-a1a3-11e9-8611-20a78dd46368.png">
 
 - 때론 전부가 아니라 몇몇의 요소들만 무시하는 방법이 필요가 있을것이다. 이 경우에는 `filter(_:)`를 사용할 것이다.
 - 예로 들어, portait 방향의 사진들은 Combinestagram 콜라주에 맞지 않다는 것을 통지 해야한다. 이번 챕터에서는 portrait 사진 대신 landscape 사진으로 바꾸도록 할 예정이다.
@@ -171,9 +171,9 @@ private var imageCache = [Int]()
 // [existing .filter { newImage in ... ]
 .filter { [weak self] newImage in
 	let len = UIImagePNGRepresentation(newImage)?.count ?? 0
-  guard self?.imageCache.contains(len) == false else { return false }
-  self?.imageCache.append(len)
-  return true
+  	guard self?.imageCache.contains(len) == false else { return false }
+  	self?.imageCache.append(len)
+  	return true
 }
 // [existing code .subscribe(...) ]
 ```
@@ -197,8 +197,8 @@ imageCache = []
 ```swift
 newPhotos
 	.taskWhile{ [weak self] image in
-    return (self?.images.value.count ?? 0) < 6
-  }
+    		return (self?.images.value.count ?? 0) < 6
+  	}
 // [existing code: filter { ... }]
 ```
 
@@ -222,8 +222,8 @@ import RxSwift
 
 extension PHPhotoLibrary {
   static var authorized: Observable<Bool> {
-    return Observable.create { observer in
-    	return Disposables.create()
+	return Observable.create { observer in
+    		return Disposables.create()
     }
   }
 }
@@ -233,22 +233,22 @@ extension PHPhotoLibrary {
 
 - 이 observable은 접근 권한 허가 여부에 따라 두 가지 방법으로 진행된다.
 
-(사진)
+<img width="683" src="https://user-images.githubusercontent.com/43217043/60793976-b7fc0980-a1a3-11e9-9ee3-ca8d513d82c2.png">
 
 - `create` 클로저 안에서 `return Dispoable.create()` 위에 아래 코드를 추가해라.
 
 ```swift
 DispatchQueue.main.async {
-  if authorizationStatus() == .authorized {
-    observer.onNext(true)
-    observer.onCompleted()
-  } else {
-    observer.onNext(false)
-    requestAuthorization { newStatus in
-      observer.onNext(newStatus == .authorized)
-      observer.onCompleted()
-    }
-  }
+	if authorizationStatus() == .authorized {
+		observer.onNext(true)
+		observer.onCompleted()
+	} else {
+		observer.onNext(false)
+		requestAuthorization { newStatus in
+			observer.onNext(newStatus == .authorized)
+			observer.onCompleted()
+		}
+	}
 }
 ```
 
@@ -259,13 +259,13 @@ DispatchQueue.main.async {
 - 사진 라이브러리 접근은 두 가지 시나리오가 있다.
 - 처음에 앱을 실행했을때 사용자가 알럿의 OK를 눌렀을때
 
-(사진)
+<img width="433" src="https://user-images.githubusercontent.com/43217043/60794511-e6c6af80-a1a4-11e9-9b3c-501eec3e9cf4.png">
 
 - 이후 앱을 실행했을때, 계속 접근을 허용한 상태일때
 
-(사진)
+<img width="383" src="https://user-images.githubusercontent.com/43217043/60794513-e6c6af80-a1a4-11e9-8626-34808ae34534.png">
 
-- 처음 해야할 것은 `를 구독하는 것이다. 이것은 각 sequence의 마지막 요소가 될 수 있으므로, 콜렉션을 다시 로드하고 카메라 롤을 보여준다.
+- 처음 해야할 것은 `PHPhotoLibrary.authorized.true`를 구독하는 것이다. 이것은 각 sequence의 마지막 요소가 될 수 있으므로, 콜렉션을 다시 로드하고 카메라 롤을 보여준다.
 
 </br>
 
@@ -277,11 +277,11 @@ authorized
 	.skipWhile { $0 == false }
 	.take(1)
 	.subcribe(onNext: { [weak self] _ in
-    self?.photos = PhotosViewController.loadPhotos()
-    DispatchQueue.main.async {
-      self?.collectionView?.reloadData()
-    }
-  })
+		self?.photos = PhotosViewController.loadPhotos()
+		DispatchQueue.main.async {
+			self?.collectionView?.reloadData()
+		}
+  	})
 	.disposed(by: bag)
 ```
 
@@ -299,9 +299,9 @@ requestAuthorization { newStatus in
 }
 ```
 
-(사진)
+<img width="557" src="https://user-images.githubusercontent.com/43217043/60793977-b894a000-a1a3-11e9-94af-aed3ce30e40f.png">
 
-- `requestAuthorization(_:)`은 어떤 쓰레드에서 completion clocure가 실행될지 보장하지 않는다. 그래서 background thread에서 실행될 수 있다. 만약 background 쓰레드 상태에서 subscription의 `self?.collectionView?.reloadData()`를 호출한다면, UIKit는 크레쉬가 날 것이다. UI 업테이트는 반드시 메인 쓰레드에서 이뤄져야 한다.
+- `requestAuthorization(_:)`은 어떤 쓰레드에서 completion clocure가 실행될지 보장하지 않는다. 그래서 background thread에서 실행될 수 있다. 만약 background 쓰레드 상태에서 subscription의 `self?.collectionView?.reloadData()`를 호출한다면, UIKit는 크레쉬가 날 것이다. UI 업테이트는 반드시 메인 쓰레드에서 이뤄져야 한다.
 
 </br></br>
 
@@ -310,16 +310,16 @@ requestAuthorization { newStatus in
 - 접근 허가를 안하지 않을때, 두가지 결과이다.
 - 처음 앱을 실행 했을때, 사용자는 알럿에서 Don't Grant를 눌렀을 경우
 
-(사진)
+<img width="495" src="https://user-images.githubusercontent.com/43217043/60793978-b894a000-a1a3-11e9-9ac7-33962ac01c95.png">
 
 - 이후 실행했을때, 계속 접근을 거부한 경우
 
-(사진)
+<img width="461" src="https://user-images.githubusercontent.com/43217043/60793980-b92d3680-a1a3-11e9-960e-cbb557d79257.png">
 
 - 위의 두 가지 경우, 같은 코드에서 실패하기 때문에 sequence 요소들은 모두 같다. 따라서 두 가지 경우 모두 아래 두 가지 로직을 따를 수 있다.
   - sequence에서 방출된 첫 번째 요소를 무시할 수 있다. 왜냐하면 첫 번째 요소는 사용자가 라이브러리 허용 상태가 결과가 아닌 라이브러리 허용 초기값이기 때문이다. 두번째 요소가 사용자가  alert를 통해 사용자가 선택한 값이다.
   - 마지막 요소가 `false`인지 확인해라. 이 경우 에러 메세지를 보여줘라.
-- 아래 코드를 viewDidLoad()에 아래 코드를 추가해라.
+- 아래 코드를 `viewDidLoad()`에 아래 코드를 추가해라.
 
 ```swift
 authorized
@@ -327,9 +327,9 @@ authorized
 	.taksLast(1)
 	.filter { $0 == false }
 	.subscribe(onNext: { [weak self] _ in
-  	guard let errorMessage = self?.errorMessage else { return }
-    DispatchQueue.main.async(execute: errorMessage)
-   })
+		guard let errorMessage = self?.errorMessage else { return }
+		DispatchQueue.main.async(execute: errorMessage)
+   	})
 	.disposed(by: bag)
 ```
 
@@ -344,7 +344,7 @@ authorized
 	.filter { $0 == false }
 ```
 
-- 마지막 요소 이전에 요소들을 무시하다가, 마지막 요소가 false인지 확인한다.
+- 마지막 요소 이전에 요소들을 무시하다가, 마지막 요소가 `false`인지 확인한다.
 
 ```swift
 authorized
@@ -352,7 +352,7 @@ authorized
 	.filter { $0 == false }
 ```
 
-- skip과 tskeLast를 distinctUntilChanged()로 대체할 수 있다.
+- `skip`과 `tskeLast`를 `distinctUntilChanged()`로 대체할 수 있다.
 
 ```swift
 authorized
@@ -363,16 +363,16 @@ authorized
 
 </br>
 
-- PhotosViewController에 아래 메소드를 추가해라.
+- **PhotosViewController.swift**에 아래 메소드를 추가해라.
 
 ```swift
 private func errorMessage() {
-  alert(title: "No access to Camera Roll", text: "You can grant access to Combinestagram from the Settings app")
-  .subscribe(onDisposed: { [weak self] in
-    self?.dismiss(animated: true, completion: nil)
-    _ = self?.navigationController?.popViewController(animated: true)
-  })
-  .disposed(by: bag)
+	alert(title: "No access to Camera Roll", text: "You can grant access to Combinestagram from the Settings app")
+		.subscribe(onDisposed: { [weak self] in
+    			self?.dismiss(animated: true, completion: nil)
+    			_ = self?.navigationController?.popViewController(animated: true)
+  		})
+  		.disposed(by: bag)
 }
 ```
 
@@ -405,8 +405,8 @@ private func errorMessage() {
 ```swift
 images.asObservable()
 	.subscribe(onNext: { [unowned self] photos in
-    self.imagePreview.image = UIImage.collage(images: photos, size: self.imagePreview.frame.size)
-  })
+    		self.imagePreview.image = UIImage.collage(images: photos, size: self.imagePreview.frame.size)
+  	})
 	.disposed(by: bag)
 ```
 
@@ -423,7 +423,7 @@ images.asObservable()
 - 그래서 사용자가 사진을 선택하고 0.2초 후에 다른 사진을 선택하면, throttle은 첫 번째 요소를 무시하고 두번째 요소를 통과시킬 것이다. 그러면 첫번째 콜라주를 생성하는 작업을 아낀다.
 - `throttle`은 연속적으로 오는 둘 이상의 요소에 대해서도 동작한다. 만약 사용자가 0.5초내에 5장의 사진을 클릭한다면, `throttle`은 첫번째 부터 네번째 사진들을 무시하고, 마지막인 다섯번째 사진만 통과 시킬 것이다.
 
-(사진)
+<img width="531" src="https://user-images.githubusercontent.com/43217043/60793981-ba5e6380-a1a3-11e9-952d-c23b8fe5f261.png">
 
 - `throttle`을 사용할 수 있는 상황은 다음과 같다.
   - 현재 텍스트를 서버 API에 보내는 검색 텍스트 필드 subscription가 있다. `throttle`을 사용하면, 사용자가 타이밍을 끝낸 단어를 서버에 요청 보낼 수 있다.
