@@ -1,6 +1,6 @@
 # Chapter 7: Transforming Operators
 
-- 구독자가 사용할 observable에서 온 데이터를 준비하기 위해 transforming 연산자를 사용할 것이다. `map(_:)`과 `flatMap(_:)` 처럼RxSwift의 transforming 연산자와 Swift standard library 연산자는 비슷하다. 이번 챕터에서는 모든 것을 transforming 할 것이다.
+- 구독자가 사용할 observable에서 온 데이터를 변형시키기위해 transforming 연산자를 사용할 것이다. `map(_:)`과 `flatMap(_:)` 처럼 RxSwift의 transforming 연산자와 Swift standard library 연산자는 비슷하게 생겼다. 이번 챕터에서는 모든 것을 변형시킬 것이다.
 
 </br></br>
 
@@ -8,7 +8,7 @@
 
 ### 1-1. toArray
 
-(사진)
+<img width="531" src="https://user-images.githubusercontent.com/43217043/60964133-83c44c80-a34d-11e9-92bc-cc59d22f224f.png">
 
 - Observable은 각각 요소들을 방출하지만, Observable을 table 또는 collection view와 바인딩 하는 것처럼 조합하기 원한다. Observable의 각각의 요소들을 배열로 전환하는 편리한 방법은 `toArray`를 사용하는 것이다. 위의 그림 처럼, `toArray`는 observable sequence의 요소들을 배열 형식으로 바꾸고, 배열 값을 가진 `.next` 이벤트를 subscriber에게 방출한다.
 - playground에 새로운 예제를 추가해라.
@@ -26,7 +26,7 @@ Observable.of("A", "B", "C")
 
 ### 1-2. map
 
-(사진)
+<img width="576" src="https://user-images.githubusercontent.com/43217043/60963982-2b8d4a80-a34d-11e9-9992-d9cee1e9d269.png">
 
 - RxSwift의 map 연산자는 Swift의 map와 같이 동작 한다. 단, RxSwift의 map은 observable을 연산한다. 위의 사진에서 보면 map은 각 요소들을 2씩 곱하는 클로저를 가진다.
 - playground에 새로운 예시를 추가해라.
@@ -87,15 +87,15 @@ struct Student {
 
 ### 2-1. flatMap
 
-(사진)
+<img width="553" src="https://user-images.githubusercontent.com/43217043/60963984-2b8d4a80-a34d-11e9-8015-97afa02e9ddf.png">
 
 - `flatMap`에 대한 문서에서 "observable sequence의 요소들을 각각 observable sequence로 만들고, observable sequence들을 한개의 observable sequence로 합친다"라고 설명한다.
 - 위의 marble diagram을 살펴보자.
   - 첫번째 줄 source observable에서 마지막 줄 target observable까지의 전달 과정을 보여주고 있다. target observable은 나중에 subscriber에게 요소들을 전달 할 것이다.
-  - 첫번째 줄 source observable은 `Int` 타입 observable인 `value` 프로퍼티를 가졌다. `value` 프로퍼티의 초기값은 object의 숫자이다. ( `O1`의 초기값은 1, `O2`의 초기값은 2 그리고 `O3`의 초기값은 3)
-  - `O1`부터 시작하면,  `faltMap`은 object를 받아 `value` 프로퍼티에 10을 곱한다. `10`를 `O1`의 obserbable(두번째 줄)에 투영하고, 마지막 줄 target observable에 전달한다.
-  - 나중에 `O1`의 value 프로퍼티가 4으로 변경된다. O1의 observable(두번째 줄)에 `40`을 투영하고 마지막 줄 target observable에 전달한다.
-  - source observable의 다음 값인 `O2`는 `flatMap`에서 `20`으로 변환 후, `O2`의 observable(세번째)에 투영하고 target observable에 전달된다. 나중에 `O2`의 `value`가 5로 바뀌면, 50으로 변환후 투영하고 target observable에 전달한다.
+  - 첫번째 줄 source observable은 `Int` 타입인 `value` 프로퍼티를 가졌다. `value` 프로퍼티의 초기값은 object의 숫자이다. ( `O1`의 초기값은 1, `O2`의 초기값은 2 그리고 `O3`의 초기값은 3)
+  - `O1`부터 시작하면,  `faltMap`은 `value` 프로퍼티에 10을 곱한다. `10`를 `O1`의 새 observable(두번째 줄)에 투영하고, 마지막 줄 target observable에 전달한다.
+  - 나중에 `O1`의 `value` 값이 4으로 변경된다. O1의 observable(두번째 줄)에 `40`을 투영하고 마지막 줄 target observable에 전달한다.
+  - source observable의 다음 값인 `O2`는 `flatMap`에서 `20`으로 변환 후, `O2`의 새 observable(세번째)에 투영하고 target observable에 전달된다. 나중에 `O2`의 `value`가 5로 바뀌면, 50으로 변환후 투영하고 target observable에 전달한다.
   - 마지막 `O3` 또한 `flatMap`을 걸쳐 변환후 투영하고 target observable에 전달된다.
 
 </br>
@@ -151,7 +151,7 @@ charlotte.score.onNext(100) // print "100"
 
 ### 2-2. flatMapLatest
 
-(사진)
+<img width="469" src="https://user-images.githubusercontent.com/43217043/60963991-2d570e00-a34d-11e9-91f3-1a6c8ed50fa0.png">
 
 - source observable에서 가장 최신 요소를 지켜보고 싶을때 `flatMapLatest`를 사용할 수 있다. `flatMapLatest`는 `switchLatest` + `map`을 조합한 것과 같다. `switchLatest`은 가장 최근의 observable으로 부터 값을 생산하고 이전 observable는 구독 해지 한다. 나머지는 **Chapter 9. Combining Operators**에서 자세히 배울 예정이다.
 - 그래서 `flatMapLatest`는 observable sequence의 각 요소들을 observable sequence의 새로운 sequence으로 투영한다. 그런 다음 observable sequence들의 observable sequence에서 가장 최근의 observable sequence으로 부터 생성한 값들만 observable sequence로 변환한다.
@@ -187,7 +187,7 @@ charlotte.score.onNext(100) // print "100"
 
 </br>
 
-- `flatMapLatest`는 네트워크 연산에 가장 많이 쓰인다.
+- `flatMapLatest`는 네트워크 연산에 가장 많이 쓰인다.
 - 간단한 예시로 사전으로 단어를 찾는 것을 생각해보자. 사용자가 각 문자 s, w, i, f, t를 입력한다면 가장 최신 단어로 검색을 실행 해야한다. 이전 검색 결과 (s, sw, swi, swif로 검색한 값)은 무시해야할 때 사용 할 수 있다.
 
 </br></br>
@@ -226,17 +226,17 @@ ryan.score.onNext(90) // not print
 student.onNext(charlotte) // not print
 ```
 
-- 코드를 분석해보자.
+- 코드를 분석해보자.
   1. error 타입을 생성한다.
   2. 두개의 `Student` 인스턴트를 생성하고  `ryan`을 초기값으로하는 `student`이라는 `BehaviorSubject`를 생성한다.
-  3. `student` observable의 `score`에 접근하기 위해서, `flatMapLast`을 사용하여 `studentScore`을 생성한다.
-  4. `studentScore`을 구독하여 score 값을 출력한다.
+  3. `student` observable의 `score`를 `Observable<Int>`으로 변형시키기 위해, `flatMapLast`을 사용하여 `studentScore`을 생성한다.
+  4. `studentScore`을 구독하여 `score` 값을 출력한다.
   5.  `ryan`에 `score`, `error`, 다른 `score`를 추가한다.
   6. `student` observable에 `charlotte`를 추가한다.
 
 </br>
 
-(사진)
+<img width="533" src="https://user-images.githubusercontent.com/43217043/60963992-2defa480-a34d-11e9-939f-8241a3ab6562.png">
 
 - 여기서 `materialize`를 사용하여, 각각의 방출되는 이벤트를 observable로 만들 수 있다.
 - `studentScore` 코드 부분을 아래 코드로 바꿔라.
@@ -258,7 +258,7 @@ student.onNext(charlotte) // print "next(100)"
 
 </br>
 
-(사진)
+<img width="532" src="https://user-images.githubusercontent.com/43217043/60963993-2defa480-a34d-11e9-92c4-9161f081d1d0.png">
 
 - 지금은 요소가 아니라 event를 받아 출력하고 있다. `dematerialize`를 이용하면 원래 형태로 바꿀 수 있다.
 
