@@ -45,9 +45,9 @@ Observable<NSNumber>.of(123, 4, 56)
 
 </br>
 
-### 1-3. enumberated
+### 1-3. enumerated
 
-- Chapter 5에서 enumberated와  map을 사용하는 방법에 대해 배웠다.
+- Chapter 5에서 enumerated와  map을 사용하는 방법에 대해 배웠다.
 - 아래 코드를 playground에 추가해라.
 
 ```swift
